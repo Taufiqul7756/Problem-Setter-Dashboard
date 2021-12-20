@@ -30,15 +30,26 @@ const closeIssue = (id) => {
   localStorage.setItem("issues", JSON.stringify(issues));
   fetchIssues();
 };
+const setStatusClosed = (id) => {
+  console.log(id, "Clicked");
+
+  // var str = new String(document.getElementById("description"));
+  // document.write(str.strike());
+  console.log(document.getElementById("description"));
+};
 
 const deleteIssue = (id) => {
   const issues = JSON.parse(localStorage.getItem("issues"));
-  const remainingIssues = issues.filter(issue.id !== id);
+  console.log(id);
+  const remainingIssues = issues.filter((issue) => issue.id != id);
+  console.log(JSON.stringify(remainingIssues));
   localStorage.setItem("issues", JSON.stringify(remainingIssues));
+  fetchIssues();
 };
 
 const fetchIssues = () => {
   const issues = JSON.parse(localStorage.getItem("issues"));
+  document.getElementById("no-of-issues").innerText = issues.length;
   const issuesList = document.getElementById("issuesList");
   issuesList.innerHTML = "";
 
@@ -48,7 +59,7 @@ const fetchIssues = () => {
     issuesList.innerHTML += `<div class="well">
                               <h6>Issue ID: ${id} </h6>
                               <p><span class="label label-info"> ${status} </span></p>
-                              <h3> ${description} </h3>
+                              <h3 id ="description"> ${description} </h3>
                               <p><span class="glyphicon glyphicon-time"></span> ${severity}</p>
                               <p><span class="glyphicon glyphicon-user"></span> ${assignedTo}</p>
                               <a href="#" onclick="setStatusClosed(${id})" class="btn btn-warning">Close</a>
